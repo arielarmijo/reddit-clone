@@ -32,10 +32,10 @@ public class User {
     @NotBlank(message = "Password is required")
     private String password;
     
-    @NotEmpty(message = "First name is required")
+    //@NotEmpty(message = "First name is required")
     private String firstName;
     
-    @NotEmpty(message = "Last name is required")
+    //@NotEmpty(message = "Last name is required")
     private String lastName;
     
     @Email
