@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
+import tk.monkeycode.redditclone.model.dto.AuthenticationResponse;
+import tk.monkeycode.redditclone.model.dto.LoginRequest;
 import tk.monkeycode.redditclone.model.dto.RegisterRequest;
 import tk.monkeycode.redditclone.service.AuthService;
 
@@ -30,4 +32,10 @@ public class AuthController {
 		authService.verifyAccount(token);
 		return ResponseEntity.ok().body("Account Activated Successully");
 	}
+	
+	@PostMapping("/login")
+	public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
+		return authService.login(loginRequest);
+	}
+	
 }
