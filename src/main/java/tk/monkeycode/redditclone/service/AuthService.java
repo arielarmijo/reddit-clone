@@ -9,12 +9,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
+import tk.monkeycode.redditclone.exception.RedditException;
 import tk.monkeycode.redditclone.model.NotificationEmail;
 import tk.monkeycode.redditclone.model.User;
 import tk.monkeycode.redditclone.model.VerificationToken;
 import tk.monkeycode.redditclone.model.dto.RegisterRequest;
 import tk.monkeycode.redditclone.repository.UserRepository;
 import tk.monkeycode.redditclone.repository.VerificationTokenRepository;
+import tk.monkeycode.redditclone.util.Constants;
 
 @Service
 @AllArgsConstructor
@@ -38,9 +40,24 @@ public class AuthService {
 		NotificationEmail email = new NotificationEmail();
 		email.setSubject("Activate your account");
 		email.setRecipient(user.getEmail());
-		email.setBody(String.format("Thank you for signing up to Reddit Clone. Please click on the link below to activate your account: http://localhost:8080/api/auth/accountVerification/%s", token));
+		email.setBody(String.format("Thank you for signing up to Reddit Clone. Please click on the link below to activate your account: %s/%s", Constants.ACTIVATION_LINK, token));
 		emailService.sendMail(email);
 	}
+	
+    public void verifyAccount(String token) {
+        VerificationToken verificationToken = verificationTokenRepository.findByToken(token)
+        									  	 .orElseThrow(() -> new RedditException("Invalid Token"));
+        fetchUserAndEnable(verificationToken);
+    }
+
+    @Transactional
+    private void fetchUserAndEnable(VerificationToken verificationToken) {
+        String username = verificationToken.getUser().getUsername();
+        User user = userRepository.findByUsername(username)
+        						 	.orElseThrow(() -> new RedditException("User Not Found with id - " + username));
+        user.setEnabled(true);
+        userRepository.save(user);
+    }
 	
 	private String generateVerificationToken(User user) {
 		String token = UUID.randomUUID().toString();
