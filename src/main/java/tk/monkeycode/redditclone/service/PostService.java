@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tk.monkeycode.redditclone.exception.RedditException;
 import tk.monkeycode.redditclone.exception.SubredditNotFoundException;
 import tk.monkeycode.redditclone.exception.UserNotFoundException;
@@ -20,6 +21,7 @@ import tk.monkeycode.redditclone.repository.SubredditRepository;
 import tk.monkeycode.redditclone.repository.UserRepository;
 import tk.monkeycode.redditclone.util.PostMapper;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class PostService {
@@ -34,6 +36,7 @@ public class PostService {
 		Subreddit subreddit = subredditRepository.findByName(postRequest.getSubredditName()).orElseThrow(SubredditNotFoundException::new);
 		User currentUser = authService.getCurrentUser();
 		Post post = postRepository.save(PostMapper.map(postRequest, subreddit, currentUser));
+		log.info("Current user: ", currentUser.getUsername());
 		return PostMapper.mapToDto(post);
 	}
 

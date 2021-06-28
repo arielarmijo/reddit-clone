@@ -28,6 +28,7 @@ public final class PostMapper {
 				   .name(postRequest.getPostName())
 				   .user(user)
 				   .description(postRequest.getDescription())
+				   .url(postRequest.getUrl())
 				   .build();
 	}
 }

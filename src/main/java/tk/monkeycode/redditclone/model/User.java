@@ -10,16 +10,20 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class User {
 	
 	@Id
@@ -29,6 +33,7 @@ public class User {
     @NotBlank(message = "Username is required")
     private String username;
     
+    @JsonIgnore
     @NotBlank(message = "Password is required")
     private String password;
     
@@ -44,6 +49,7 @@ public class User {
     
     private Instant created;
     
+    @JsonIgnore
     private boolean enabled;
 
 }

@@ -14,11 +14,14 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.lang.Nullable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @AllArgsConstructor
@@ -26,6 +29,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
+@ToString
 public class Post {
 
 	@Id
@@ -46,10 +50,12 @@ public class Post {
 	
 	private Integer voteCount;
 	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "subreddit_id")
 	private Subreddit subreddit;

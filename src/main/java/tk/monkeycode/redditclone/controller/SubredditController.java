@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
-import tk.monkeycode.redditclone.model.Subreddit;
 import tk.monkeycode.redditclone.model.dto.SubredditDto;
 import tk.monkeycode.redditclone.service.SubredditService;
 
@@ -24,21 +23,18 @@ public class SubredditController {
 	private final SubredditService redditService;
 
 	@PostMapping()
-	public ResponseEntity<Subreddit> createSubreddit(@RequestBody SubredditDto subredditDto) {
-		Subreddit subreddit = redditService.save(subredditDto);
-		return ResponseEntity.status(HttpStatus.CREATED).body(subreddit);
+	public ResponseEntity<SubredditDto> createSubreddit(@RequestBody SubredditDto subredditDto) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(redditService.save(subredditDto));
 	}
 	
 	@GetMapping()
 	public ResponseEntity<List<SubredditDto>> getAllSubreddits() {
-		List<SubredditDto> subredditsDto = redditService.getAll();
-		return ResponseEntity.status(HttpStatus.OK).body(subredditsDto);
+		return ResponseEntity.status(HttpStatus.OK).body(redditService.getAll());
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<SubredditDto> getSubreddit(@PathVariable Long id) {
-		SubredditDto subredditDto = redditService.getSubreddit(id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(subredditDto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(redditService.getSubreddit(id));
 	}
 	
 }
