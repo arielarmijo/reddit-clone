@@ -17,13 +17,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import lombok.AllArgsConstructor;
-import tk.monkeycode.redditclone.service.JwtProvider;
+import tk.monkeycode.redditclone.service.JwtService;
 
 @Component
 @AllArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	
-	private final JwtProvider jwtProvider;
+	private final JwtService jwtProvider;
 	private final UserDetailsService userDetailsService;
 
 	@Override

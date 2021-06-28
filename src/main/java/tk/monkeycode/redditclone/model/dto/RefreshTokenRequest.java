@@ -1,7 +1,8 @@
 package tk.monkeycode.redditclone.model.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,10 +11,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
-public class AuthenticationResponse {
-	
-	private String authenticationToken;
-	private String refreshToken;
+public class RefreshTokenRequest {
 
+	@NotBlank
+	private String refreshToken;
+	
 }

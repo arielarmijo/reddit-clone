@@ -19,6 +19,7 @@ import tk.monkeycode.redditclone.model.User;
 import tk.monkeycode.redditclone.model.VerificationToken;
 import tk.monkeycode.redditclone.model.dto.AuthenticationResponse;
 import tk.monkeycode.redditclone.model.dto.LoginRequest;
+import tk.monkeycode.redditclone.model.dto.RefreshTokenRequest;
 import tk.monkeycode.redditclone.model.dto.RegisterRequest;
 import tk.monkeycode.redditclone.repository.UserRepository;
 import tk.monkeycode.redditclone.repository.VerificationTokenRepository;
@@ -33,7 +34,8 @@ public class AuthService {
 	private final VerificationTokenRepository verificationTokenRepository;
 	private final AuthenticationManager authenticationManager;
 	private final EmailService emailService;
-	private final JwtProvider jwtProvider;
+	private final JwtService jwtService;
+	private final RefreshTokenService refreshTokenService;
 	
 	@Transactional
 	public void signup(RegisterRequest registerRequest) {
@@ -62,8 +64,12 @@ public class AuthService {
     	var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
         Authentication authenticate = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authenticate);
-        String authenticationToken = jwtProvider.generateToken(authenticate);
-        return new AuthenticationResponse(authenticationToken);
+        var principal = (org.springframework.security.core.userdetails.User) authenticate.getPrincipal();
+        String authenticationToken = jwtService.generateToken(principal.getUsername());
+        return AuthenticationResponse.builder()
+        		.authenticationToken(authenticationToken)
+        		.refreshToken(refreshTokenService.generateRefreshToken().getToken())
+        		.build();
     }
     
     @Transactional(readOnly = true)
@@ -80,6 +86,14 @@ public class AuthService {
         						 	.orElseThrow(() -> new RedditException(String.format("User id %s not found", username)));
         user.setEnabled(true);
         userRepository.save(user);
+    }
+    
+    public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
+    	refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
+    	return AuthenticationResponse.builder()
+    			.authenticationToken(jwtService.generateToken(getCurrentUser().getUsername()))
+    			.refreshToken(refreshTokenRequest.getRefreshToken())
+    			.build();
     }
 	
 	private String generateVerificationToken(User user) {

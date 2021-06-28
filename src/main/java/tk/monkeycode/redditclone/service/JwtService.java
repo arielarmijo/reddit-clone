@@ -15,8 +15,6 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
@@ -27,7 +25,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import tk.monkeycode.redditclone.exception.RedditException;
 
 @Service
-public class JwtProvider {
+public class JwtService {
 	
 	private KeyStore keyStore;
 	
@@ -46,11 +44,10 @@ public class JwtProvider {
 
     }
 
-	public String generateToken(Authentication auth) {
-		User principal = (User) auth.getPrincipal();
+	public String generateToken(String username) {
 		Instant now = Instant.now();
 		return Jwts.builder()
-				   .setSubject(principal.getUsername())
+				   .setSubject(username)
 				   .setIssuedAt(Date.from(now))
 				   .setExpiration(Date.from(now.plusMillis(jwtExpirationInMillis)))
 				   .signWith(getPrivateKey(), SignatureAlgorithm.RS512)
