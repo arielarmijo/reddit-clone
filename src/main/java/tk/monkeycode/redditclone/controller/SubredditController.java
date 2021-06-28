@@ -17,7 +17,7 @@ import tk.monkeycode.redditclone.service.SubredditService;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/subreddit")
+@RequestMapping("/api/subreddits")
 public class SubredditController {
 	
 	private final SubredditService redditService;
