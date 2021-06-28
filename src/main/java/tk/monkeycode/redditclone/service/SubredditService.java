@@ -11,17 +11,17 @@ import tk.monkeycode.redditclone.exception.RedditException;
 import tk.monkeycode.redditclone.model.Subreddit;
 import tk.monkeycode.redditclone.model.dto.SubredditDto;
 import tk.monkeycode.redditclone.repository.SubredditRepository;
+import tk.monkeycode.redditclone.util.SubredditMapper;
 
 @Service
 @AllArgsConstructor
 public class SubredditService {
 
 	private final SubredditRepository subredditRepository;
-	private final AuthService authService;
 	
 	@Transactional
 	public Subreddit save(SubredditDto subredditDto) {
-		Subreddit subreddit = mapSubredditDto(subredditDto);
+		Subreddit subreddit = SubredditMapper.map(subredditDto);
 		return subredditRepository.save(subreddit);
 	}
 	
@@ -29,7 +29,7 @@ public class SubredditService {
 	public List<SubredditDto> getAll() {
 		return subredditRepository.findAll()
 								  .stream()
-								  .map(this::mapSubreddit)
+								  .map(SubredditMapper::mapToDto)
 								  .collect(Collectors.toList());
 	}
 	
@@ -37,21 +37,9 @@ public class SubredditService {
 	public SubredditDto getSubreddit(Long id) {
 		Subreddit subreddit = subredditRepository.findById(id)
 												 .orElseThrow(() -> new RedditException("Subreddit not found."));
-		return mapSubreddit(subreddit);
+		return SubredditMapper.mapToDto(subreddit);
 	}
 	
-	private Subreddit mapSubredditDto(SubredditDto subredditDto) {
-		return Subreddit.builder()
-						.name(subredditDto.getName())
-						.description(subredditDto.getDescription())
-						.build();
-	}
 	
-	private SubredditDto mapSubreddit(Subreddit subreddit) {
-		return SubredditDto.builder().name(subreddit.getName())
-			               .id(subreddit.getId())
-			               .numberOfPost(subreddit.getPosts().size())
-			               .build();
-	}
 	
 }
