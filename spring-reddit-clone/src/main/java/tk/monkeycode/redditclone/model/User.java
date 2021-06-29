@@ -47,7 +47,7 @@ public class User {
     @NotEmpty(message = "Email is required")
     private String email;
     
-    private Instant created;
+    private Instant createdAt;
     
     @JsonIgnore
     private boolean enabled;

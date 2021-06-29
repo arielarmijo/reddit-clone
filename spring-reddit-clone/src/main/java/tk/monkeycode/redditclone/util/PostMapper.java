@@ -13,7 +13,7 @@ import tk.monkeycode.redditclone.model.dto.PostResponse;
 public final class PostMapper {
 	
 	public static PostResponse mapToDto(Post post, int commentCount) {
-		Long timeAgo = Instant.now().toEpochMilli() - post.getCreatedDate().toEpochMilli();
+		Long timeAgo = Instant.now().toEpochMilli() - post.getCreatedAt().toEpochMilli();
 		return PostResponse.builder()
 						   .id(post.getId())
 						   .postName(post.getName())
@@ -30,7 +30,7 @@ public final class PostMapper {
 	public static Post map(PostRequest postRequest, Subreddit subreddit, User user) {
 		return Post.builder()
 				   .name(postRequest.getPostName())
-				   .createdDate(Instant.now())
+				   .createdAt(Instant.now())
 				   .url(postRequest.getUrl())
 				   .description(postRequest.getDescription())
 				   .voteCount(0)

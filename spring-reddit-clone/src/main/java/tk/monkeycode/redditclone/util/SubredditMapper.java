@@ -22,7 +22,7 @@ public final class SubredditMapper {
 		return Subreddit.builder()
 						.name(subredditDto.getName())
 						.description(subredditDto.getDescription())
-						.createdDate(Instant.now())
+						.createdAt(Instant.now())
 						.user(user)
 						.build();
 	}

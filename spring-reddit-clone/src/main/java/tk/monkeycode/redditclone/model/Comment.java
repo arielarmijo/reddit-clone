@@ -34,7 +34,7 @@ public class Comment {
     @NotEmpty
     private String text;
     
-    private Instant createdDate;
+    private Instant createdAt;
     
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -11,7 +11,7 @@ public final class CommentMapper {
 
 	public static Comment map(CommentDto commentDto, Post post, User user) {
 		return Comment.builder()
-					  .createdDate(Instant.now())
+					  .createdAt(Instant.now())
 					  .text(commentDto.getText())
 					  .post(post)
 					  .user(user)
@@ -22,7 +22,7 @@ public final class CommentMapper {
 		return CommentDto.builder()
 					  .id(comment.getId())
 					  .postId(comment.getPost().getId())
-					  .createdDate(comment.getCreatedDate())
+					  .createdAt(comment.getCreatedAt())
 					  .text(comment.getText())
 					  .userName(comment.getUser().getUsername())
 					  .build();

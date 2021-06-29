@@ -39,7 +39,7 @@ public class Post {
 	@NotBlank(message = "Post Name cannot be empty or Null")
 	private String name;
 	
-	private Instant createdDate;
+	private Instant createdAt;
 	
 	@Nullable
 	private String url;

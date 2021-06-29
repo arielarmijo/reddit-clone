@@ -32,7 +32,7 @@ public class VerificationToken {
 	
     private String token;
     
-    private Instant expiryDate;
+    private Instant expiration;
     
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY)
