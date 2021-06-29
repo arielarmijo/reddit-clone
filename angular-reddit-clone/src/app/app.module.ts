@@ -15,6 +15,11 @@ import { SignupComponent } from './page/signup/signup.component';
 import { HomeComponent } from './page/home/home.component';
 import { PostComponent } from './page/post/post.component';
 import { TokenInterceptor } from './token-interceptor';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PostTileComponent } from './component/post-tile/post-tile.component';
+import { VoteButtonComponent } from './component/vote-button/vote-button.component';
+import { SideBarComponent } from './component/side-bar/side-bar.component';
+import { SubredditSideBarComponent } from './component/subreddit-side-bar/subreddit-side-bar.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +28,11 @@ import { TokenInterceptor } from './token-interceptor';
     SignupComponent,
     LoginComponent,
     HomeComponent,
-    PostComponent
+    PostComponent,
+    PostTileComponent,
+    VoteButtonComponent,
+    SideBarComponent,
+    SubredditSideBarComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +41,8 @@ import { TokenInterceptor } from './token-interceptor';
     HttpClientModule,
     BrowserAnimationsModule,
     NgxWebstorageModule.forRoot(),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FontAwesomeModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
