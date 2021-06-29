@@ -1,1 +1,1 @@
---insert into user (id, username, password, email, enabled) values (1, 'aarmijo', '$2a$10$O.udAvsveX.UPRbsUyka9.mzvbzEa5FGISE1iXlVfs9esQirvOWB6', 'arielarmijo@yahoo.es', true);
+insert into user (id, username, password, email, enabled) values (1, 'aarmijo', '$2a$10$O.udAvsveX.UPRbsUyka9.mzvbzEa5FGISE1iXlVfs9esQirvOWB6', 'arielarmijo@yahoo.es', true);

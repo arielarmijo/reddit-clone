@@ -17,7 +17,8 @@
                             <div class="col-md-6">
                                 <input type="text" id="email_address" class="form-control"
                                        name="email-address" formControlName="email" required autofocus/>
-                                <span *ngIf="!signupForm.get('email')?.valid && signupForm.get('email')?.touched">
+                                <span class="text-danger"
+                                      *ngIf="!signupForm.get('email')?.valid && signupForm.get('email')?.touched">
                                     Please provide a valid email.
                                 </span>
                             </div>
@@ -28,7 +29,8 @@
                             <div class="col-md-6">
                                 <input type="text" class="form-control"
                                        formControlName="username" required autofocus/>
-                                <span *ngIf="!signupForm.get('username')?.valid && signupForm.get('username')?.touched">
+                                <span class="text-danger"
+                                      *ngIf="!signupForm.get('username')?.valid && signupForm.get('username')?.touched">
                                     Please provide a username.
                                 </span>
                             </div>
@@ -39,7 +41,8 @@
                             <div class="col-md-6">
                                 <input type="password" id="password" class="form-control"
                                        name="password" formControlName="password" required/>
-                                <span *ngIf="!signupForm.get('password')?.valid && signupForm.get('password')?.touched">
+                                <span class="text-danger"
+                                      *ngIf="!signupForm.get('password')?.valid && signupForm.get('password')?.touched">
                                     Please provide a password.
                                 </span>
                             </div>
